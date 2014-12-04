@@ -58,6 +58,9 @@ THE SOFTWARE.
 #include "base/CCAutoreleasePool.h"
 #include "base/CCConfiguration.h"
 #include "platform/CCApplication.h"
+#if CC_ENABLE_SCRIPT_BINDING
+#include "CCScriptSupport.h"
+#endif
 //#include "platform/CCGLViewImpl.h"
 
 /**
@@ -125,7 +128,10 @@ bool Director::init(void)
 
     // purge ?
     _purgeDirectorInNextLoop = false;
-
+#if CC_ENABLE_SCRIPT_BINDING
+    // restart ?
+    _restartDirectorInNextLoop = false;
+#endif
     _winSizeInPoints = Size::ZERO;
 
     _openGLView = nullptr;
@@ -927,6 +933,84 @@ void Director::end()
     _purgeDirectorInNextLoop = true;
 }
 
+void Director::restart()
+{
+    _restartDirectorInNextLoop = true;
+}
+
+void Director::restartDirector()
+{
+#if CC_ENABLE_SCRIPT_BINDING
+    // cleanup scheduler
+    //getScheduler()->unscheduleAll();
+    // Disable event dispatching
+    if (_eventDispatcher)
+    {
+        _eventDispatcher->setEnabled(false);
+    }
+
+    if (_runningScene)
+    {
+        _runningScene->onExit();
+        _runningScene->cleanup();
+        _runningScene->release();
+    }
+
+    _runningScene = nullptr;
+    _nextScene = nullptr;
+
+    // remove all objects, but don't release it.
+    // runWithScene might be executed after 'end'.
+    _scenesStack.clear();
+
+    stopAnimation();
+
+    CC_SAFE_RELEASE_NULL(_FPSLabel);
+    CC_SAFE_RELEASE_NULL(_drawnBatchesLabel);
+    CC_SAFE_RELEASE_NULL(_drawnVerticesLabel);
+
+    // purge bitmap cache
+    FontFNT::purgeCachedData();
+
+    FontFreeType::shutdownFreeType();
+
+    // purge all managed caches
+
+    AnimationCache::destroyInstance();
+    SpriteFrameCache::destroyInstance();
+    GLProgramCache::destroyInstance();
+    GLProgramStateCache::destroyInstance();
+    FileUtils::destroyInstance();
+
+    // cocos2d-x specific data structures
+    UserDefault::destroyInstance();
+
+    GL::invalidateStateCache();
+
+    //destroyTextureCache();
+    _textureCache->removeAllTextures();
+
+    // OpenGL view
+    // if (_openGLView)
+    // {
+    //     _openGLView->release();
+    //     _openGLView = nullptr;
+    // }
+
+    // Disable event dispatching
+    if (_eventDispatcher)
+    {
+        _eventDispatcher->setEnabled(true);
+    }
+
+    // release the objects
+    PoolManager::getInstance()->getCurrentPool()->clear();
+
+    ScriptEvent scriptEvent(kRestartGame, NULL);
+    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+    #endif
+}
+
 void Director::purgeDirector()
 {
     // cleanup scheduler
@@ -1259,6 +1343,7 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
     }
 }
 
+
 /***************************************************
 * implementation of DisplayLinkDirector
 **************************************************/
@@ -1290,6 +1375,13 @@ void DisplayLinkDirector::mainLoop()
         _purgeDirectorInNextLoop = false;
         purgeDirector();
     }
+#if CC_ENABLE_SCRIPT_BINDING
+    else if (_restartDirectorInNextLoop)
+    {
+        _restartDirectorInNextLoop = false;
+        restartDirector();
+    }
+#endif
     else if (! _invalid)
     {
         drawScene();
