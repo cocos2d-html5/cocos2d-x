@@ -143,6 +143,7 @@ project.properties
 /templates/lua-template-runtime/runtime
 /v*-deps-*.zip
 /v*-lua-runtime-*.zip
+/v*-console-*.zip
 /tools/fbx-conv/
 external/chipmunk
 tests/cpp-tests/Resources/audio
@@ -152,4 +153,14 @@ tests/cpp-tests/Resources/audio
 /external/xxtea/
 /external/protobuf-lite/
 /external/flatbuffers/
-v3-console-4.zip
+/external/android/
+/external/ios/
+/external/linux/
+/external/mac/
+/external/win32/
+/external/winrt_8.1/
+/external/wp_8.1/
+/tests/js-tests/
+/tests/lua-empty-test/src/cocos/
+/tests/lua-game-controller-test/src/cocos/
+/tests/lua-tests/src/cocos/

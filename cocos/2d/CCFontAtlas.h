@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -39,6 +39,8 @@ class Font;
 class Texture2D;
 class EventCustom;
 class EventListenerCustom;
+
+/// @cond
 
 struct FontLetterDefinition
 {
@@ -128,6 +130,7 @@ protected:
     bool _antialiasEnabled;
 };
 
+/// @endcond
 
 NS_CC_END
 

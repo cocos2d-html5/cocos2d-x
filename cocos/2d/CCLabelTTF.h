@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -37,16 +37,14 @@ NS_CC_BEGIN
 #pragma warning (disable: 4996)
 #endif
 
+/// @cond
+
 class Label;
 
 /**
- * @addtogroup GUI
- * @{
- * @addtogroup label
+ * @addtogroup _2d
  * @{
  */
-
-
 
 /** @brief LabelTTF is a subclass of TextureNode that knows how to render text labels
  *
@@ -165,14 +163,16 @@ protected:
 };
 
 
-// end of GUI group
-/// @}
+// end of group
 /// @}
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"
 #elif _MSC_VER >= 1400 //vs 2005 or higher
 #pragma warning (pop)
 #endif
+
+/// @endcond
+
 NS_CC_END
 
 #endif //__CCLABEL_H__

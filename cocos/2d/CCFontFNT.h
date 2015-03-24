@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -32,6 +32,8 @@ NS_CC_BEGIN
 
 class BMFontConfiguration;
 
+/// @cond FontFNT
+
 class CC_DLL FontFNT : public Font
 {
     
@@ -62,6 +64,8 @@ private:
     Vec2                   _imageOffset;
     
 };
+
+/// @endcond
 
 NS_CC_END
 
