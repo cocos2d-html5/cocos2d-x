@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -33,9 +33,7 @@ NS_CC_BEGIN
 
 class FontAtlas;
 
-// fwd
-class FontAtlas;
-
+/// @cond
 
 class CC_DLL Font : public Ref
 {
@@ -67,7 +65,8 @@ protected:
 
 };
 
-NS_CC_END
+/// @endcond
 
+NS_CC_END
 
 #endif

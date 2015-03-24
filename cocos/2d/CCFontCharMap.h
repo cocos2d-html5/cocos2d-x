@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -29,6 +29,8 @@
 #include "2d/CCFont.h"
 
 NS_CC_BEGIN
+
+/// @cond
 
 class FontCharMap : public Font
 {  
@@ -60,6 +62,8 @@ private:
     int _itemHeight;
 
 };
+
+/// @endcond
 
 NS_CC_END
 

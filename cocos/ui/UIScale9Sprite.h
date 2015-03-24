@@ -45,7 +45,7 @@ namespace ui {
      *         Then you could call any methods of Sprite class with the return pointers.
      *
      */
-    class CC_GUI_DLL Scale9Sprite : public Node
+    class CC_GUI_DLL Scale9Sprite : public Node, public cocos2d::BlendProtocol
     {
     public:
         /**
@@ -237,12 +237,31 @@ namespace ui {
          */
         virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
         
-        virtual bool init();
+        virtual bool init() override;
         virtual bool init(Sprite* sprite, const Rect& rect, bool rotated, const Rect& capInsets);
         virtual bool init(Sprite* sprite, const Rect& rect, const Rect& capInsets);
         virtual bool init(Sprite* sprite, const Rect& rect, bool rotated, const Vec2 &offset, const Size &originalSize, const Rect& capInsets);
         CC_DEPRECATED_ATTRIBUTE virtual bool initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, bool rotated, const Rect& capInsets);
         CC_DEPRECATED_ATTRIBUTE virtual bool initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, const Rect& capInsets);
+        
+        /**
+         * Sets the source blending function.
+         *
+         * @param blendFunc A structure with source and destination factor to specify pixel arithmetic,
+         *                  e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.
+         * @js NA
+         * @lua NA
+         */
+        virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+        
+        /**
+         * Returns the blending function that is currently being used.
+         *
+         * @return A BlendFunc structure with source and destination factor which specified pixel arithmetic.
+         * @js NA
+         * @lua NA
+         */
+        virtual const BlendFunc &getBlendFunc() const override;
 
         /**
          * Creates and returns a new sprite object with the specified cap insets.
@@ -376,12 +395,15 @@ namespace ui {
         virtual float getScaleY() const override;
         virtual float getScale() const override;
         using Node::getScaleZ;
+        virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
     protected:
         void updateCapInset();
         void updatePositions();
         void createSlicedSprites();
         void cleanupSlicedSprites();
         void adjustScale9ImagePosition();
+        void applyBlendFunc();
+        void updateBlendFunc(Texture2D *texture);
         /**
          * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
          * This approach can improves the performance massively.
@@ -407,6 +429,7 @@ namespace ui {
         Sprite* _bottomRightSprite;
         
         bool _scale9Enabled;
+        BlendFunc _blendFunc;
         
         Size _topLeftSize;
         Size _centerSize;

@@ -33,11 +33,19 @@ NS_CC_BEGIN
 
 class Event;
 
+/** @class EventListenerMouse
+ * @brief Mouse event listener.
+ * @js cc._EventListenerMouse
+ */
 class CC_DLL EventListenerMouse : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
     
+    /** Create a mouse event listener.
+     *
+     * @return An autoreleased EventListenerMouse object.
+     */
     static EventListenerMouse* create();
 
     /// Overrides

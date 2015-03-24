@@ -34,16 +34,34 @@ NS_CC_BEGIN
 
 class Touch;
 
+/** @class EventListenerTouchOneByOne
+ * @brief Single touch event listener.
+ * @js cc._EventListenerTouchOneByOne
+ */
 class CC_DLL EventListenerTouchOneByOne : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
     
+    /** Create a one by one touch event listener.
+     */
     static EventListenerTouchOneByOne* create();
     
+    /**
+     * Destructor.
+     * @js NA
+     */
     virtual ~EventListenerTouchOneByOne();
     
+    /** Whether or not to swall touches.
+     *
+     * @param needSwallow True if needs to swall touches.
+     */
     void setSwallowTouches(bool needSwallow);
+    /** Is swall touches or not.
+     *
+     * @return True if needs to swall touches.
+     */
     bool isSwallowTouches();
     
     /// Overrides
@@ -72,13 +90,22 @@ private:
     friend class EventDispatcher;
 };
 
-
+/** @class EventListenerTouchAllAtOnce
+ * @brief Multiple touches event listener.
+ */
 class CC_DLL EventListenerTouchAllAtOnce : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
     
+    /** Create a all at once event listener.
+     *
+     * @return An autoreleased EventListenerTouchAllAtOnce object.
+     */
     static EventListenerTouchAllAtOnce* create();
+    /** Destructor.
+     * @js NA
+     */
     virtual ~EventListenerTouchAllAtOnce();
     
     /// Overrides
